@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CustomerSignInView">
+        <attr name="circleBgColor" format="color"/>
+        <attr name="circleUnSignInColor" format="color"/>
+        <attr name="circleSignInColor" format="color"/>
+        <attr name="lineColor" format="color"/>
+        <attr name="lineHeight" format="dimension"/>
+        <attr name="circleRadius" format="dimension"/>
+        <attr name="signPadding" format="dimension"/>
+        <attr name="signTextColor" format="color"/>
+        <attr name="signTextSize" format="dimension"/>
+        <attr name="signTextMarginTop" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="RoundProgress">
+        <attr name="roundColor" format="color"/>
+        <attr name="roundProgressColor" format="color"/>
+        <attr name="roundCircleColor" format="color"/>
+        <attr name="progressTextColor" format="color"/>
+        <attr name="roundWidth" format="dimension"/>
+        <attr name="progressTextSize" format="dimension"/>
+        <attr name="textIsDisplayable" format="boolean"/>
+        <attr name="roundIsFill" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="PasswordEditText">
+        <attr name="pwdBackgroundColor" format="color"/>
+        <attr name="passwordColor" format="color"/>
+        <attr name="borderColor" format="color"/>
+        <attr name="passwordWidth" format="dimension"/>
+        <attr name="passwordSize" format="dimension"/>
+        <attr name="borderWidth" format="dimension"/>
+        <attr name="pwdIsVisible" format="boolean"/>
+        <attr name="pwdLength" format="integer"/>
+    </declare-styleable>
+
+</resources>
