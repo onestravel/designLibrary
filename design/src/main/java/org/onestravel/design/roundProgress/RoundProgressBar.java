@@ -12,7 +12,6 @@ import android.view.View;
 
 import com.onestravel.design.R;
 
-import org.jetbrains.annotations.Nullable;
 
 
 /**
@@ -65,13 +64,13 @@ public class RoundProgressBar extends View {
 		initPaint();
 	}
 
-	public RoundProgressBar(Context context, @Nullable AttributeSet attrs) {
+	public RoundProgressBar(Context context,AttributeSet attrs) {
 		super(context, attrs);
 		getAttributrs(context, attrs, 0);
 		initPaint();
 	}
 
-	public RoundProgressBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+	public RoundProgressBar(Context context,  AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		getAttributrs(context, attrs, defStyleAttr);
 		initPaint();
