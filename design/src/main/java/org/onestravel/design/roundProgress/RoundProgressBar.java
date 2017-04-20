@@ -76,6 +76,12 @@ public class RoundProgressBar extends View {
 		initPaint();
 	}
 
+	/**
+	 * 获取自定义属性值
+	 * @param context
+	 * @param attrs
+	 * @param defStyleAttr
+	 */
 	private void getAttributrs(Context context, AttributeSet attrs, int defStyleAttr) {
 		this.mContext = context;
 		TypedArray typeArr = context.getTheme().obtainStyledAttributes(attrs, R.styleable.RoundProgress, defStyleAttr, 0);
@@ -113,6 +119,14 @@ public class RoundProgressBar extends View {
 
 	}
 
+	/**
+	 * 创建一个画笔
+	 * @param paintColor
+	 * @param textSize
+	 * @param style
+	 * @param roundWidth
+	 * @return
+	 */
 	private Paint creatPaint(int paintColor, int textSize, Paint.Style style, int roundWidth) {
 		Paint paint = new Paint();
 		paint.setColor(paintColor);
@@ -135,6 +149,9 @@ public class RoundProgressBar extends View {
 		circleRadius = centre - roundWidth / 2 - 2 - padding; //圆弧的半径（圆心到x的距离减去园弧线宽度的1/2，再减去2作为修正）
 	}
 
+	/**
+	 * 初始化画笔
+	 */
 	private void initPaint() {
 		defaultRoundPaint = creatPaint(roundColor, 0, Paint.Style.STROKE, roundWidth);
 		defaultCircleRoundPaint = creatPaint(roundCircleColor, 0, Paint.Style.FILL, 0);
@@ -151,15 +168,27 @@ public class RoundProgressBar extends View {
 		drawProgressText(canvas);
 	}
 
+	/**
+	 * 绘制默认圆环
+	 * @param canvas
+	 */
 	private void drawDefaultRound(Canvas canvas) {
 		canvas.drawCircle(centre, centre, circleRadius, defaultRoundPaint);
 	}
 
+	/**
+	 * 进度条内圆形的背景色
+	 * @param canvas
+	 */
 	private void drawCircleRound(Canvas canvas) {
 		canvas.drawCircle(centre, centre, circleRadius - roundWidth / 2, defaultCircleRoundPaint);
 	}
 
 
+	/**
+	 * 绘制进度条
+	 * @param canvas
+	 */
 	private void drawProgressRound(Canvas canvas) {
 		RectF oval = new RectF(centre - circleRadius, centre - circleRadius, centre + circleRadius, centre + circleRadius);  //用于定义的圆弧的形状和大小的界限
 		if (roundIsFill) {
@@ -170,6 +199,10 @@ public class RoundProgressBar extends View {
 		canvas.drawArc(oval, -90, 360 * progress / maxProgress, roundIsFill, progressRoundPaint);  //根据进度画圆弧
 	}
 
+	/**
+	 * 绘制圆形进度条内的进度文字
+	 * @param canvas
+	 */
 	private void drawProgressText(Canvas canvas) {
 		if (textIsDisplayable) {
 			String text = String.valueOf((int) (progress * 100f / maxProgress)) + "%";

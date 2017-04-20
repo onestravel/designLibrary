@@ -25,12 +25,19 @@ import java.util.List;
 
 public class CustomerSignInView extends View {
 	private Context mContext;
-	private int circleBgColor = Color.WHITE;//
+	//签到默认色
+	private int circleBgColor = Color.WHITE;
+	//未签到圆形背景色
 	private int circleUnSignInColor = Color.GRAY;
+	//已签到圆形背景色
 	private int circleSignInColor = Color.GREEN;
+	//	签到的线条颜色
 	private int lineColor = Color.WHITE;
+	//签到线条的宽度
 	private int lineHeight = 5;
+	//圆形半径
 	private int circleRadius = 20;
+	//padding值
 	private int signPadding = 20;
 	private Paint linePaint;
 	private Paint circleBgPaint;
@@ -73,14 +80,17 @@ public class CustomerSignInView extends View {
 		getAttributrs(context, attrs, defStyleAttr);
 		initPaint();
 	}
-
+	
+	/**
+	 * 获得我们所定义的自定义样式属性
+	 * @param context         
+	 * @param attrs
+	 * @param defStyleAttr
+	 */
 	private void getAttributrs(Context context, AttributeSet attrs, int defStyleAttr) {
 		if (attrs == null) {
 			return;
 		}
-		/**
-		 * 获得我们所定义的自定义样式属性
-		 */
 		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.CustomerSignInView, defStyleAttr, 0);
 		int n = a.getIndexCount();
 		for (int i = 0; i < n; i++) {
@@ -128,6 +138,9 @@ public class CustomerSignInView extends View {
 
 	}
 
+	/**
+	 * 初始化画笔
+	 */
 	private void initPaint() {
 		linePaint = creatPaint(lineColor, 0, Paint.Style.FILL, lineHeight);
 		lineSignPaint = creatPaint(circleSignInColor, 0, Paint.Style.FILL, lineHeight);
@@ -138,6 +151,14 @@ public class CustomerSignInView extends View {
 		signInCheckPaint = creatPaint(Color.WHITE, circleRadius * 2, Paint.Style.FILL, circleRadius);
 	}
 
+	/**
+	 * 创建一个画笔
+	 * @param paintColor
+	 * @param textSize
+	 * @param style
+	 * @param lineWidth
+	 * @return
+	 */
 	private Paint creatPaint(int paintColor, int textSize, Paint.Style style, int lineWidth) {
 		Paint paint = new Paint();
 		paint.setColor(paintColor);
@@ -152,12 +173,16 @@ public class CustomerSignInView extends View {
 		return paint;
 	}
 
+	/**
+	 * view大小改变的回调方法
+	 * @param w
+	 * @param h
+	 * @param oldw
+	 * @param oldh
+	 */
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
-//		int height = (getHeight() - signPadding * 2 - lineHeight) / 2;
-//		int y = (int) TypedValue.applyDimension(
-//				TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics());
 		int height = (signPadding * 2 + circleRadius * 2 + signTextSize + signTextMarginTop);
 		if (height > h) {
 			h = height;
@@ -167,10 +192,18 @@ public class CustomerSignInView extends View {
 		textHeightInView = lineHeightInView + circleRadius + signTextSize + signTextMarginTop;
 	}
 
+	/**
+	 * 绘制默认线条
+	 * @param canvas
+	 */
 	private void drawLine(Canvas canvas) {
 		canvas.drawLine(signPadding + circleRadius, lineHeightInView, getWidth() - signPadding - circleRadius, lineHeightInView, linePaint);
 	}
 
+	/**
+	 * 绘制已签到线条
+	 * @param canvas
+	 */
 	private void drawSignLine(Canvas canvas) {
 		int size = (getWidth() - signPadding * 2 - circleRadius * 2) / 6;
 		if (checkedList.contains(currentPosition)) {
@@ -180,6 +213,10 @@ public class CustomerSignInView extends View {
 		}
 	}
 
+	/**
+	 * 绘制圆形背景
+	 * @param canvas
+	 */
 	private void drawCircleBg(Canvas canvas) {
 		int size = (getWidth() - signPadding * 2 - circleRadius * 2) / 6;
 		for (int i = 0; i < signList.size(); i++) {
@@ -187,11 +224,20 @@ public class CustomerSignInView extends View {
 		}
 	}
 
+	/**
+	 * 绘制圆形上的白色对号
+	 * @param position
+	 * @param canvas
+	 */
 	private void drawCircleCheck(int position, Canvas canvas) {
 		int length = (getWidth() - signPadding * 2 - circleRadius * 2) / 6;
 		canvas.drawText("√", length * position + signPadding + circleRadius, lineHeightInView + circleRadius / 2, signInCheckPaint);
 	}
 
+	/**
+	 * 绘制已签到圆形
+	 * @param canvas
+	 */
 	private void drawCircleSignIn(Canvas canvas) {
 		int size = (getWidth() - signPadding * 2 - circleRadius * 2) / 6;
 		for (int i = 0; i <= currentPosition; i++) {
@@ -204,6 +250,10 @@ public class CustomerSignInView extends View {
 		}
 	}
 
+	/**
+	 * 绘制签到文本
+	 * @param canvas
+	 */
 	private void drawSignInText(Canvas canvas) {
 		int size = (getWidth() - signPadding * 2 - circleRadius * 2) / 6;
 		for (int i = 0; i < signList.size(); i++) {
@@ -229,7 +279,7 @@ public class CustomerSignInView extends View {
 	public void setSignInData(List<String> data) {
 		if (!data.isEmpty()) {
 			signList.addAll(data);
-			invalidate();
+			postInvalidate();
 		}
 	}
 
@@ -244,7 +294,7 @@ public class CustomerSignInView extends View {
 		if (!checkList.isEmpty()) {
 			this.checkedList.addAll(checkList);
 		}
-		invalidate();
+		postInvalidate();
 	}
 
 	public int getCircleBgColor() {
@@ -253,7 +303,7 @@ public class CustomerSignInView extends View {
 
 	public void setCircleBgColor(int circleBgColor) {
 		this.circleBgColor = circleBgColor;
-		invalidate();
+		postInvalidate();
 	}
 
 	public int getCircleUnSignInColor() {
@@ -262,7 +312,7 @@ public class CustomerSignInView extends View {
 
 	public void setCircleUnSignInColor(int circleUnSignInColor) {
 		this.circleUnSignInColor = circleUnSignInColor;
-		invalidate();
+		postInvalidate();
 	}
 
 	public int getCircleSignInColor() {
@@ -271,7 +321,7 @@ public class CustomerSignInView extends View {
 
 	public void setCircleSignInColor(int circleSignInColor) {
 		this.circleSignInColor = circleSignInColor;
-		invalidate();
+		postInvalidate();
 	}
 
 	public int getLineColor() {
@@ -280,7 +330,7 @@ public class CustomerSignInView extends View {
 
 	public void setLineColor(int lineColor) {
 		this.lineColor = lineColor;
-		invalidate();
+		postInvalidate();
 	}
 
 	public int getLineHeight() {
@@ -289,7 +339,7 @@ public class CustomerSignInView extends View {
 
 	public void setLineHeight(int lineHeight) {
 		this.lineHeight = lineHeight;
-		invalidate();
+		postInvalidate();
 	}
 
 	public int getCircleRadius() {
@@ -298,7 +348,7 @@ public class CustomerSignInView extends View {
 
 	public void setCircleRadius(int circleRadius) {
 		this.circleRadius = circleRadius;
-		invalidate();
+		postInvalidate();
 	}
 
 	public int getSignPadding() {
@@ -307,7 +357,7 @@ public class CustomerSignInView extends View {
 
 	public void setSignPadding(int signPadding) {
 		this.signPadding = signPadding;
-		invalidate();
+		postInvalidate();
 	}
 
 	public int getSignTextColor() {
@@ -316,7 +366,7 @@ public class CustomerSignInView extends View {
 
 	public void setSignTextColor(int signTextColor) {
 		this.signTextColor = signTextColor;
-		invalidate();
+		postInvalidate();
 	}
 
 	public int getSignTextSize() {
@@ -325,7 +375,7 @@ public class CustomerSignInView extends View {
 
 	public void setSignTextSize(int signTextSize) {
 		this.signTextSize = signTextSize;
-		invalidate();
+		postInvalidate();
 	}
 
 	public int getSignTextMarginTop() {
@@ -334,6 +384,6 @@ public class CustomerSignInView extends View {
 
 	public void setSignTextMarginTop(int signTextMarginTop) {
 		this.signTextMarginTop = signTextMarginTop;
-		invalidate();
+		postInvalidate();
 	}
 }
